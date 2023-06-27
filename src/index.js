@@ -55,6 +55,7 @@ loadAppConfig()
     const currentAppName = appConfig.name || (appConfig.expo && appConfig.expo.name);
     const nS_CurrentAppName = currentAppName.replace(/\s/g, '');
 
+
     program
       .version(projectVersion)
       .arguments('[newName]')
@@ -64,6 +65,7 @@ loadAppConfig()
         const nS_NewName = newName.replace(/\s/g, '');
         const pattern = /^([\p{Letter}\p{Number}])+([\p{Letter}\p{Number}\s]+)$/u;
         const bundleID = program.bundleID ? program.bundleID : null;
+        console.log(`**** ${program.bundleID}`)
         let newBundlePath;
         const listOfFoldersAndFiles = foldersAndFiles(currentAppName, newName);
         const listOfFilesToModifyContent = filesToModifyContent(currentAppName, newName, projectName);
@@ -250,6 +252,7 @@ loadAppConfig()
             .then(resolveJavaFiles)
             .then(gitUpdateChanges)
             .then(cleanBuilds)
+            .then(() => console.log(`new bundle identifier ${newBundleID}`))
             .then(() => console.log(`APP SUCCESSFULLY RENAMED TO "${newName}"! 🎉 🎉 🎉`.green))
             .then(() => {
               if (fs.existsSync(path.join(__dirname, 'ios', 'Podfile'))) {
