@@ -55,6 +55,7 @@ loadAppConfig()
     const currentAppName = appConfig.name || (appConfig.expo && appConfig.expo.name);
     const nS_CurrentAppName = currentAppName.replace(/\s/g, '');
 
+    const options = program.opts();
 
     program
       .version(projectVersion)
@@ -64,8 +65,8 @@ loadAppConfig()
         const newName = argName || currentAppName;
         const nS_NewName = newName.replace(/\s/g, '');
         const pattern = /^([\p{Letter}\p{Number}])+([\p{Letter}\p{Number}\s]+)$/u;
-        const bundleID = program.bundleID ? program.bundleID : null;
-        console.log(`**** ${program.bundleID}`)
+        const bundleID = options.bundleID; // program.bundleID ? program.bundleID : null;
+        console.log(`**** ${program.bundleID}`);
         let newBundlePath;
         const listOfFoldersAndFiles = foldersAndFiles(currentAppName, newName);
         const listOfFilesToModifyContent = filesToModifyContent(currentAppName, newName, projectName);
